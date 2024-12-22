@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Reference VS Copy</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+
+<body>
+
+    <script>
+        // start with strings, numbers and booleans
+        console.group("start with strings, numbers and booleans")
+        let age = 100;
+        let age2 = age;
+        console.log(`age: ${age}, age2: ${age2}`);
+        console.log("Setting age to 200");
+        age = 200;
+        console.log(`age: ${age}, age2: ${age2}`);
+
+        let name = 'Wes';
+        let name2 = name;
+        console.log(`name: ${name}, name2: ${name2}`);
+        name = 'wesley';
+        console.log("Setting name to 'wesley'");
+        console.log(`name: ${name}, name2: ${name2}`);
+        console.groupEnd();
+
+        console.group("Arrays are copied by reference");
+        // Let's say we have an array
+        const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+        console.log("players", players);
+
+        // and we want to make a copy of it.
+        console.log("Setting team = players");
+        const team = players;
+        console.log("Players", players);
+        console.log("Team", team);
+
+        // You might think we can just do something like this:
+        team[3] = 'Lux';
+        console.log("Setting team[3] = 'Lux'");
+        console.log("Players", players);
+        console.log("Team", team);
+
+        // however what happens when we update that array?
+
+        // now here is the problem!
+
+        // oh no - we have edited the original array too!
+
+        // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+        // So, how do we fix this? We take a copy instead!
+        console.log("Team2 - created from 'players' with slice()");
+        const team2 = players.slice();
+        console.log("Pushing 'Jeff' to team2");
+        team2.push("Jeff");
+        console.log("Team2", team2);
+        console.log("Players", players);
+
+        // one way
+
+        // or create a new array and concat the old one in
+        console.log("Team3 - created from 'players' with concat()");
+        const team3 = [].concat(players);
+        console.log("Pushing 'Jack' to team3");
+        team3.push("Jack");
+        console.log("Team3", team3);
+        console.log("Players", players);
+
+        // or use the new ES6 Spread
+        const team4 = [...players];
+        console.log("Team4 - created from 'players' using spread operator");
+        // now when we update it, the original one isn't changed
+        console.log("Updating team4");
+        team4[3] = 'heeee hawww';
+        console.log("Team4", team4);
+        console.log("Players", players);
+
+        const team5 = Array.from(players);
+        console.log("Team5 - created from 'players' using Array.from()");
+        console.log("Updating team5")
+        team5.push("player2");
+        console.log("Team 5", team5);
+        console.log("Players", players);
+
+        console.groupEnd();
+
+        // The same thing goes for objects, let's say we have a person object
+        console.group("The same thing goes for objects, let's say we have a person object");
+
+        // with Objects
+        const person = {
+            name: 'Wes Bos',
+            age: 80
+        };
+        console.log("Person", person);
+
+        // and think we make a copy:
+        console.log("Setting captain = person");
+        const captain = person;
+        console.log("Captain", captain);
+        console.log("Setting captain.number = 99");
+        captain.number = 99;
+        console.log("Person", person);
+        console.log("Captain", captain);
+
+        // how do we take a copy instead?
+        console.log("cap2 - created from person using Object.assign()");
+        const cap2 = Object.assign({}, person, {number: 99, age: 12});
+        console.log("Person", person);
+        console.log("cap2", cap2);
+
+        console.groupEnd();
+
+        // We will hopefully soon see the object ...spread
+
+        // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+        console.group("Nested objects");
+        const wes = {
+            name: 'Wes',
+            age: 100,
+            social: {
+                twitter: '@wesbos',
+                facebook: 'wesbos.developer'
+            }
+        };
+        console.log("Wes", wes);
+        console.log("dev - created from wes using Object.assign()");
+        const dev = Object.assign({}, wes);
+        console.log("dev", dev);
+
+        console.log("Setting dev.social.twitter")
+        dev.social.twitter = "@dev"
+        console.log("dev", dev);
+        console.log("Wes", wes);
+
+        console.groupEnd();
+
+    </script>
+
+</body>
+
+</html>
