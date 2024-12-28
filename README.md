@@ -1,3 +1,5 @@
 # JS30_solutions
 
-My own solutions for Wes Bos JavaScript 30 course
+Solutions for Wes Bos's [JavaScript 30 Course](https://javascript30.com/) course for practicing vanilla JavaScript.
+
+
